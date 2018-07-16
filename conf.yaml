@@ -1,0 +1,41 @@
+# rabbitmq server
+
+rabbitmq:
+    uri: amqp://test:test@127.0.0.1:5672/      #develop
+    consumerTag: consumer.test
+    num: 1
+    exchange:
+        - name: test.data
+          type: test.fanout
+    queue:
+        - name: test.data
+          key: test.data.
+
+rabbitmq_consumer:
+    uri: amqp://test:test@10.2.45.56:5672/      #develop
+    num: 1
+    exchange:
+        - name: test.parser
+          type: fanout
+    queue:
+        - name: test.parser
+          key: test.parser
+
+# redis
+redis:
+    host: 127.0.0.1
+    port: 6379
+    password: test
+    DB: 6
+    PoolSize: 10
+
+# mysql
+mysql:
+    db:
+      host: 127.0.0.1:3306       #develop
+      database: test
+      username: test
+      password: abcd1234
+      MaxOpenConns: 10
+      MaxIdleConns: 1
+      enable: true # 是否写入数据库
