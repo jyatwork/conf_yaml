@@ -98,7 +98,7 @@ func Get(cfg interface{}, path string) (interface{}, error) {
 			}
 		}
 	}
-	fmt.Println("parts:", parts)
+	//fmt.Println("parts:", parts)
 	// Get the value.
 	for pos, part := range parts {
 		switch c := cfg.(type) {

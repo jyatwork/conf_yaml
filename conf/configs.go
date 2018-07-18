@@ -8,10 +8,30 @@ import (
 	"strconv"
 	"strings"
 
+	"os/signal"
+	"sync"
+	"syscall"
+
 	"github.com/alecthomas/log4go"
 )
 
-var cfg *YamlCfg
+var (
+	cfg        *YamlCfg
+	configLock = new(sync.RWMutex)
+)
+
+//热加载配置文件
+func init() {
+	s := make(chan os.Signal, 1)
+	signal.Notify(s, syscall.SIGINT) //syscall.SIGUSR1
+	go func() {
+		for {
+			<-s
+			log4go.Info("Reloaded config.")
+			Load("config.yaml")
+		}
+	}()
+}
 
 //cfgFile filepath
 func Load(cfgFile string) error {
